@@ -131,9 +131,11 @@ tab1, tab2, tab3 = st.tabs(["Review Analysis", "Trip Analyzer", "Sentiment Distr
 
 with tab1:
     st.header("Analyze Your Travel Reviews")
-    review_text = st.text_area("Enter your travel review here:", height=150, placeholder="e.g., The hotel service was excellent, but the food was a bit disappointing.")
+    with st.form("review_form"):
+        review_text = st.text_area("Enter your travel review here:", height=150, placeholder="e.g., The hotel service was excellent, but the food was a bit disappointing.")
+        submitted = st.form_submit_button("Analyze Review")
 
-    if st.button("Analyze Review", key="analyze_review_btn"):
+    if submitted:
         if review_text:
             st.subheader("Analysis Results:")
 
@@ -199,9 +201,11 @@ with tab1:
 
 with tab2:
     st.header("Plan Your Next Adventure")
-    travel_query = st.text_input("Tell me about your travel goals:", placeholder="e.g., I want to visit Paris in June for a romantic getaway.")
+    with st.form("trip_form"):
+        travel_query = st.text_input("Tell me about your travel goals:", placeholder="e.g., I want to visit Paris in June for a romantic getaway.")
+        submitted = st.form_submit_button("Plan My Trip")
 
-    if st.button("Plan My Trip", key="plan_trip_btn"):
+    if submitted:
         if travel_query:
             st.subheader("Trip Planning Insights:")
 
@@ -231,18 +235,20 @@ with tab2:
 
 with tab3:
     st.header("Overall Sentiment Dashboard")
-    multi_reviews = st.text_area(
-        "Enter multiple travel reviews (one per line):",
-        height=200,
-        placeholder=(
-            "e.g.\n"
-            "The flight was delayed but the crew was amazing.\n"
-            "Terrible hotel, never again.\n"
-            "Fantastic food and great location."
+    with st.form("dashboard_form"):
+        multi_reviews = st.text_area(
+            "Enter multiple travel reviews (one per line):",
+            height=200,
+            placeholder=(
+                "e.g.\n"
+                "The flight was delayed but the crew was amazing.\n"
+                "Terrible hotel, never again.\n"
+                "Fantastic food and great location."
+            )
         )
-    )
+        submitted = st.form_submit_button("Analyze All Reviews")
 
-    if st.button("Analyze All Reviews", key="analyze_all_btn"):
+    if submitted:
         if multi_reviews:
             reviews_list = [r.strip() for r in multi_reviews.split('\n') if r.strip()]
 
